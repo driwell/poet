@@ -14,8 +14,6 @@ Being a specialized tool instead of a generic parser it's able to modify the tex
 
 ## How to use?
 
-`poet [OPTIONS] FILE_PATH`
-
 **Note:** Every command generates at least a log file unless stated otherwise.
       Messages that require attention. Errors, warnings or advices will be in this file.
 
