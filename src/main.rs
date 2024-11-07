@@ -5,11 +5,11 @@ use clap::{arg, command, value_parser};
 fn main() {
     let matches = command!()
         .about("Parses exported topics")
-        .arg(arg!(-c --clean <FILE> "Prints out a clean file").value_parser(value_parser!(PathBuf)))
+        .arg(arg!(-f --find <PATTERN> "Prints out lines with occurrences of a pattern"))
+        .arg(
+            arg!([path] "File path")
+                .value_parser(value_parser!(PathBuf))
+                .required(true),
+        )
         .get_matches();
-
-    println!(
-        "file: {}",
-        matches.get_one::<PathBuf>("clean").unwrap().display()
-    );
 }
