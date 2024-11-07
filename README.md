@@ -14,21 +14,4 @@ Being a specialized tool instead of a generic parser it's able to modify the tex
 
 ## How to use?
 
-**Note:** Every command generates at least a log file unless stated otherwise.
-      Messages that require attention. Errors, warnings or advices will be in this file.
-
-**clean** - Generates file with sensible dialogue replacements. When applicable, it will generate three extra files.
-
-1. [FILE_PATH_clean.topic] File with sensible replacements.
-
-2. [FILE_PATH_alias_player.txt] File with topics where there's an occurrence of <Alias=Player>.
-
-3. [FILE_PATH_unresolved.txt] File with topics which poet wasn't able to automatically resolve. Manual action is required.
-
-`poet [-c --clean] FILE_PATH`
-
-**name** - Generates a file with all the occurrences of <Alias=Player> replaced by each name in a given file.
-
-1. [FILE_PATH_name.topic] File with repeated lines of dialogue topics for each provided name.
-
-`poet [-n --name] FILE_PATH NAMES_FILE_PATH`
+**TODO** - Define each functionality
