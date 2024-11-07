@@ -1,10 +1,8 @@
 use anyhow::{Context, Result};
-use std::{
-    fs,
-    path::{Path, PathBuf},
-};
+use std::path::PathBuf;
 
 use clap::{arg, command, value_parser};
+use poet::find;
 
 fn main() -> Result<()> {
     let matches = command!()
@@ -25,16 +23,4 @@ fn main() -> Result<()> {
             .get_one::<PathBuf>("path")
             .with_context(|| "no path provided")?,
     )
-}
-
-fn find(pattern: &str, path: &Path) -> Result<()> {
-    let content = fs::read_to_string(path)?;
-
-    for line in content.lines() {
-        if line.contains(pattern) {
-            println!("{}", line);
-        }
-    }
-
-    Ok(())
 }
