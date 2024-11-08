@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use std::path::PathBuf;
 
 use clap::{arg, command, value_parser};
@@ -15,9 +15,13 @@ fn main() -> Result<()> {
         )
         .get_matches();
 
-    let pattern = matches.get_one::<String>("find").unwrap();
+    let path = matches
+        .get_one::<PathBuf>("path")
+        .with_context(|| "no path provided")?;
 
-    let path = matches.get_one::<PathBuf>("path").unwrap();
+    if let Some(pattern) = matches.get_one::<String>("find") {
+        find(pattern, path)?
+    }
 
-    find(pattern, path)
+    Ok(())
 }
