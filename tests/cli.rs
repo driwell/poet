@@ -23,7 +23,7 @@ fn find_content_in_file() -> Result<(), Box<dyn std::error::Error>> {
     cmd.arg("-f").arg("foo").arg(file.path());
     cmd.assert()
         .success()
-        .stdout(predicate::str::contains("A foo\nthen a foobar"));
+        .stdout(predicate::eq("A foo\nthen a foobar\n"));
 
     Ok(())
 }
@@ -35,9 +35,9 @@ fn prints_content_in_file_without_pattern() -> Result<(), Box<dyn std::error::Er
 
     let mut cmd = Command::cargo_bin("poet")?;
     cmd.arg(file.path());
-    cmd.assert().success().stdout(predicate::str::contains(
-        "A foo\njumped over a bar\nthen a foobar",
-    ));
+    cmd.assert()
+        .success()
+        .stdout(predicate::eq("A foo\njumped over a bar\nthen a foobar\n"));
 
     Ok(())
 }
