@@ -1,9 +1,9 @@
-use std::fs::File;
-use std::io::prelude::*;
-use std::io::{BufReader, Lines};
-
 use anyhow::Result;
-use std::path::Path;
+use std::{
+    fs::File,
+    io::{prelude::*, BufReader, Lines},
+    path::Path,
+};
 
 pub fn find(pattern: &str, path: &Path) -> Result<()> {
     let lines = read_lines(path)?;
