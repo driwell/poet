@@ -2,7 +2,7 @@ use anyhow::{Context, Result};
 use std::path::PathBuf;
 
 use clap::{arg, command, value_parser};
-use poet::find;
+use poet::{find, print};
 
 fn main() -> Result<()> {
     let matches = command!()
@@ -21,6 +21,8 @@ fn main() -> Result<()> {
 
     if let Some(pattern) = matches.get_one::<String>("find") {
         find(pattern, path)?
+    } else {
+        print(path)?
     }
 
     Ok(())

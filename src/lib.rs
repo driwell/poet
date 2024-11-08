@@ -13,3 +13,14 @@ pub fn find(pattern: &str, path: &Path) -> Result<()> {
 
     Ok(())
 }
+
+pub fn print(path: &Path) -> Result<()> {
+    let content = fs::read_to_string(path)
+        .with_context(|| format!("could not read file `{}`", path.display()))?;
+
+    for line in content.lines() {
+        println!("{}", line);
+    }
+
+    Ok(())
+}
