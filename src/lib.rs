@@ -1,19 +1,16 @@
 use std::fs::File;
 use std::io::prelude::*;
-use std::io::BufReader;
+use std::io::{BufReader, Lines};
 
 use anyhow::{Context, Result};
 use std::{fs, path::Path};
 
 pub fn find(pattern: &str, path: &Path) -> Result<()> {
-    let content = File::open(path)?;
-    let reader = BufReader::new(content);
+    let lines = read_lines(path)?;
 
-    // TODO: implement this properly
-    for line in reader.lines() {
-        let un = line?;
-        if un.contains(pattern) {
-            println!("{}", un);
+    for line in lines.map_while(Result::ok) {
+        if line.contains(pattern) {
+            println!("{}", line);
         }
     }
 
@@ -29,4 +26,9 @@ pub fn print(path: &Path) -> Result<()> {
     }
 
     Ok(())
+}
+
+fn read_lines(path: &Path) -> Result<Lines<BufReader<File>>> {
+    let file = File::open(path)?;
+    Ok(BufReader::new(file).lines())
 }
