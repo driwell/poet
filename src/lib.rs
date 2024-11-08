@@ -2,8 +2,8 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::io::{BufReader, Lines};
 
-use anyhow::{Context, Result};
-use std::{fs, path::Path};
+use anyhow::Result;
+use std::path::Path;
 
 pub fn find(pattern: &str, path: &Path) -> Result<()> {
     let lines = read_lines(path)?;
@@ -18,10 +18,9 @@ pub fn find(pattern: &str, path: &Path) -> Result<()> {
 }
 
 pub fn print(path: &Path) -> Result<()> {
-    let content = fs::read_to_string(path)
-        .with_context(|| format!("could not read file `{}`", path.display()))?;
+    let lines = read_lines(path)?;
 
-    for line in content.lines() {
+    for line in lines.map_while(Result::ok) {
         println!("{}", line);
     }
 
