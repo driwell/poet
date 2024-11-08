@@ -19,12 +19,13 @@ fn main() -> Result<()> {
         .get_one::<PathBuf>("path")
         .with_context(|| "no path provided")?;
 
+    let lines: Vec<String>;
+
     if let Some(pattern) = matches.get_one::<String>("find") {
-        find(pattern, path)?
+        lines = find(pattern, path)?;
     } else {
-        let lines = all(path)?;
-        print(lines);
+        lines = all(path)?;
     }
 
-    Ok(())
+    print(lines)
 }
