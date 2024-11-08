@@ -6,28 +6,28 @@ use std::{
 };
 
 pub fn find(pattern: &str, path: &Path) -> Result<Vec<String>> {
-    let lines = read_lines(path)?;
-    let mut correct_lines = Vec::new();
+    let content = read_lines(path)?;
+    let mut lines = Vec::new();
 
-    for line in lines
+    for line in content
         .map_while(Result::ok)
         .filter(|line| line.contains(pattern))
     {
-        correct_lines.push(line)
+        lines.push(line)
     }
 
-    Ok(correct_lines)
+    Ok(lines)
 }
 
 pub fn all(path: &Path) -> Result<Vec<String>> {
-    let lines = read_lines(path)?;
-    let mut correct_lines = Vec::new();
+    let content = read_lines(path)?;
+    let mut lines = Vec::new();
 
-    for line in lines.map_while(Result::ok) {
-        correct_lines.push(line)
+    for line in content.map_while(Result::ok) {
+        lines.push(line)
     }
 
-    Ok(correct_lines)
+    Ok(lines)
 }
 
 fn read_lines(path: &Path) -> Result<Lines<BufReader<File>>> {
