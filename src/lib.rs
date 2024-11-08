@@ -8,10 +8,11 @@ use std::path::Path;
 pub fn find(pattern: &str, path: &Path) -> Result<()> {
     let lines = read_lines(path)?;
 
-    for line in lines.map_while(Result::ok) {
-        if line.contains(pattern) {
-            println!("{}", line);
-        }
+    for line in lines
+        .map_while(Result::ok)
+        .filter(|line| line.contains(pattern))
+    {
+        println!("{}", line);
     }
 
     Ok(())
