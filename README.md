@@ -14,4 +14,20 @@ Being a specialized tool instead of a generic parser it's able to modify the tex
 
 ## How to use?
 
-**TODO** - Define each functionality
+The application includes documentation which can be accessed through the `--help` command.
+
+`poet [-h, --help]`
+
+```
+Parses exported topics
+
+Usage: poet [OPTIONS] <path>
+
+Arguments:
+  <path>  File path
+
+Options:
+  -f, --find <PATTERN>  Prints out lines with occurrences of a pattern
+  -h, --help            Print help
+  -V, --version         Print version
+```
