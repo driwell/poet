@@ -5,10 +5,8 @@ pub fn find(pattern: &str, path: &Path) -> Result<()> {
     let content = fs::read_to_string(path)
         .with_context(|| format!("could not read file `{}`", path.display()))?;
 
-    for line in content.lines() {
-        if line.contains(pattern) {
-            println!("{}", line);
-        }
+    for line in content.lines().filter(|line| line.contains(pattern)) {
+        println!("{}", line);
     }
 
     Ok(())
