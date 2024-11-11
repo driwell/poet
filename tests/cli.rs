@@ -51,7 +51,7 @@ fn replace_content_in_file() -> Result<(), Box<dyn std::error::Error>> {
     cmd.arg("-r").arg("foo").arg("baz").arg(file.path());
     cmd.assert()
         .success()
-        .stdout(predicate::eq("A baz\njumped over a bar\nthen a bazbar\n"));
+        .stdout(predicate::eq("A baz\nthen a bazbar\n"));
 
     Ok(())
 }
