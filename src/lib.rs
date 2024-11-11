@@ -18,7 +18,7 @@ pub fn print(lines: Vec<String>) -> Result<()> {
     Ok(())
 }
 
-pub fn all(path: &Path) -> Result<Vec<String>> {
+pub fn read(path: &Path) -> Result<Vec<String>> {
     let content = read_lines(path)?;
     let mut lines = Vec::new();
 

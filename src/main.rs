@@ -2,7 +2,7 @@ use anyhow::{Context, Result};
 use std::path::PathBuf;
 
 use clap::{arg, command, value_parser};
-use poet::{all, find, print, replace, unfold};
+use poet::{find, print, read, replace, unfold};
 
 fn main() -> Result<()> {
     let matches = command!()
@@ -44,7 +44,7 @@ fn main() -> Result<()> {
             lines = replace(pattern[0], pattern[1], path)?;
         }
     } else if matches.get_one::<bool>("all").is_some() {
-        lines = all(path)?;
+        lines = read(path)?;
     } else {
         unreachable!("Prevented by arg_required_else_help and path being required")
     }
