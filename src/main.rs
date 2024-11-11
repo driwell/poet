@@ -32,17 +32,20 @@ fn main() -> Result<()> {
     let lines: Vec<String>;
 
     if let Some(pattern) = matches.get_one::<String>("find") {
-        let read = read(path)?;
-        lines = find(pattern, read)?;
+        lines = find(pattern, read(path)?)?;
     } else if let Some(pattern) = matches.get_many::<String>("replace") {
         let pattern: Vec<_> = pattern.collect();
 
         if matches.get_flag("unfold") {
             // TODO: remove this after proof-of-concept
             let values = vec!["Freya", "Bella"];
-            lines = unfold(replace(pattern[0], pattern[1], path)?, pattern[0], values)?;
+            lines = unfold(
+                replace(pattern[0], pattern[1], read(path)?)?,
+                pattern[0],
+                values,
+            )?;
         } else {
-            lines = replace(pattern[0], pattern[1], path)?;
+            lines = replace(pattern[0], pattern[1], read(path)?)?;
         }
     } else if matches.get_one::<bool>("all").is_some() {
         lines = read(path)?;

@@ -41,18 +41,16 @@ pub fn find(pattern: &str, lines: Vec<String>) -> Result<Vec<String>> {
     Ok(found)
 }
 
-pub fn replace(old: &str, new: &str, path: &Path) -> Result<Vec<String>> {
-    let content = read_lines(path)?;
-    let mut lines = Vec::new();
+pub fn replace(old: &str, new: &str, lines: Vec<String>) -> Result<Vec<String>> {
+    let mut replaced = Vec::new();
 
-    for line in content
-        .map_while(Result::ok)
-        .filter(|line| line.contains(old))
-    {
-        lines.push(line.replace(old, new));
+    for line in lines {
+        if line.contains(old) {
+            replaced.push(line.replace(old, new));
+        }
     }
 
-    Ok(lines)
+    Ok(replaced)
 }
 
 pub fn unfold(lines: Vec<String>, pattern: &str, values: Vec<&str>) -> Result<Vec<String>> {
