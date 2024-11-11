@@ -8,13 +8,13 @@ fn main() -> Result<()> {
     let matches = command!()
         .about("Parses exported topics")
         .arg_required_else_help(true)
-        .arg(arg!(-a --all "Print all lines"))
-        .arg(arg!(-f --find <PATTERN> "Print lines with a PATTERN"))
         .arg(
             arg!([path] "File path")
                 .value_parser(value_parser!(PathBuf))
                 .required(true),
         )
+        .arg(arg!(-a --all "Print all lines"))
+        .arg(arg!(-f --find <PATTERN> "Print lines with a PATTERN"))
         .arg(
             arg!(-r --replace <PATTERN> "Print lines with OLD replaced by NEW")
                 .value_delimiter(' ')
