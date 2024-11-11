@@ -24,7 +24,11 @@ fn main() -> Result<()> {
         .arg(
             arg!(-i --input <FILE> "Take optional input file").value_parser(value_parser!(PathBuf)),
         )
-        .arg(arg!(-u --unfold "Unfold results").requires("input"))
+        .arg(
+            arg!(-u --unfold "Unfold results")
+                .requires("input")
+                .requires("find"),
+        )
         .get_matches();
 
     let path = matches
