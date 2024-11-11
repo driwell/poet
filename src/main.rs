@@ -31,12 +31,17 @@ fn main() -> Result<()> {
         )
         .get_matches();
 
+    // TODO: consider making this into an optional argument to detangle the process and allow for
+    // better command chaining by making every. By doing that it would be possible to process any
+    // io streams instead of being unnecessarily file bound.
     let path = matches
         .get_one::<PathBuf>("path")
         .with_context(|| "no path provided")?;
 
     let lines: Vec<String>;
 
+    // TODO: in line with the previous comment this whole logic must be changed to detangle file
+    // reading from the options.
     if let Some(pattern) = matches.get_one::<String>("find") {
         if matches.get_flag("unfold") {
             let input = matches
