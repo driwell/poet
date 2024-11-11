@@ -33,7 +33,7 @@ fn main() -> Result<()> {
     } else if let Some(pattern) = matches.get_many::<String>("replace") {
         let pattern: Vec<_> = pattern.collect();
         lines = replace(pattern[0], pattern[1], path)?;
-    } else if matches.get_one::<String>("all").is_some() {
+    } else if matches.get_one::<bool>("all").is_some() {
         lines = all(path)?;
     } else {
         // TODO: handle these cases, probably use subcommands and make option required
