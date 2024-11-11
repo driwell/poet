@@ -62,10 +62,10 @@ fn unexpected_argument() -> Result<(), Box<dyn std::error::Error>> {
     file.write_str("A foo\njumped over a bar\nthen a foobar")?;
 
     let mut cmd = Command::cargo_bin("poet")?;
-    cmd.arg("-u").arg(file.path());
-    cmd.assert()
-        .failure()
-        .stderr(predicate::str::contains("unexpected argument '-u' found"));
+    cmd.arg("--foo").arg(file.path());
+    cmd.assert().failure().stderr(predicate::str::contains(
+        "unexpected argument '--foo' found",
+    ));
 
     Ok(())
 }
