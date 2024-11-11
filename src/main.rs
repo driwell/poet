@@ -7,7 +7,7 @@ use poet::{all, find, print, replace};
 fn main() -> Result<()> {
     let matches = command!()
         .about("Parses exported topics")
-        .arg(arg!(-f --find <PATTERN> "Prints out lines with occurrences of a pattern"))
+        .arg(arg!(-f --find <PATTERN> "Print lines with a PATTERN"))
         .arg(
             arg!([path] "File path")
                 .value_parser(value_parser!(PathBuf))
