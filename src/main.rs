@@ -32,8 +32,8 @@ fn main() -> Result<()> {
         .get_matches();
 
     // TODO: consider making this into an optional argument to detangle the process and allow for
-    // better command chaining by making every. By doing that it would be possible to process any
-    // io streams instead of being unnecessarily file bound.
+    // better command chaining by making every option take generic data.
+    // By doing that it would be possible to process any io streams instead of being unnecessarily file bound.
     let path = matches
         .get_one::<PathBuf>("path")
         .with_context(|| "no path provided")?;
