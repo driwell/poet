@@ -37,8 +37,7 @@ fn main() -> Result<()> {
     } else if matches.get_one::<bool>("all").is_some() {
         lines = all(path)?;
     } else {
-        // TODO: handle these cases, probably use subcommands and make option required
-        panic!("shouln't be able to pass no options")
+        unreachable!("Prevented by arg_required_else_help and path being required")
     }
 
     print(lines)
