@@ -2,7 +2,7 @@ use anyhow::{Context, Result};
 use std::path::PathBuf;
 
 use clap::{arg, command, value_parser};
-use poet::{all, find, print};
+use poet::{all, find, print, replace};
 
 fn main() -> Result<()> {
     let matches = command!()
@@ -29,6 +29,9 @@ fn main() -> Result<()> {
 
     if let Some(pattern) = matches.get_one::<String>("find") {
         lines = find(pattern, path)?;
+    } else if let Some(pattern) = matches.get_many::<String>("replace") {
+        let pattern: Vec<_> = pattern.collect();
+        lines = replace(pattern[0], pattern[1], path)?;
     } else {
         lines = all(path)?;
     }
