@@ -42,3 +42,17 @@ pub fn find(pattern: &str, path: &Path) -> Result<Vec<String>> {
 
     Ok(lines)
 }
+
+pub fn replace(old: &str, new: &str, path: &Path) -> Result<Vec<String>> {
+    let content = read_lines(path)?;
+    let mut lines = Vec::new();
+
+    for line in content
+        .map_while(Result::ok)
+        .filter(|line| line.contains(old))
+    {
+        lines.push(line.replace(old, new));
+    }
+
+    Ok(lines)
+}
