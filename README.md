@@ -30,6 +30,8 @@ Options:
   -a, --all                  Print all lines
   -f, --find <PATTERN>       Print lines with a PATTERN
   -r, --replace <OLD> <NEW>  Print lines with OLD replaced by NEW
+  -i, --input <FILE>         Take optional input file
+  -u, --unfold               Unfold results
   -h, --help                 Print help
   -V, --version              Print version
 ```
