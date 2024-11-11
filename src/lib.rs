@@ -5,18 +5,17 @@ use std::{
     path::Path,
 };
 
-pub fn find(pattern: &str, path: &Path) -> Result<Vec<String>> {
-    let content = read_lines(path)?;
-    let mut lines = Vec::new();
+fn read_lines(path: &Path) -> Result<Lines<BufReader<File>>> {
+    let file = File::open(path)?;
+    Ok(BufReader::new(file).lines())
+}
 
-    for line in content
-        .map_while(Result::ok)
-        .filter(|line| line.contains(pattern))
-    {
-        lines.push(line)
+pub fn print(lines: Vec<String>) -> Result<()> {
+    for line in lines {
+        println!("{}", line);
     }
 
-    Ok(lines)
+    Ok(())
 }
 
 pub fn all(path: &Path) -> Result<Vec<String>> {
@@ -30,15 +29,16 @@ pub fn all(path: &Path) -> Result<Vec<String>> {
     Ok(lines)
 }
 
-fn read_lines(path: &Path) -> Result<Lines<BufReader<File>>> {
-    let file = File::open(path)?;
-    Ok(BufReader::new(file).lines())
-}
+pub fn find(pattern: &str, path: &Path) -> Result<Vec<String>> {
+    let content = read_lines(path)?;
+    let mut lines = Vec::new();
 
-pub fn print(lines: Vec<String>) -> Result<()> {
-    for line in lines {
-        println!("{}", line);
+    for line in content
+        .map_while(Result::ok)
+        .filter(|line| line.contains(pattern))
+    {
+        lines.push(line)
     }
 
-    Ok(())
+    Ok(lines)
 }
