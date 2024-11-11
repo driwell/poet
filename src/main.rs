@@ -22,7 +22,7 @@ fn main() -> Result<()> {
                 .value_names(["OLD", "NEW"]),
         )
         .arg(arg!(-i --input <FILE> "Take optional input file"))
-        .arg(arg!(-u --unfold "Unfold reults"))
+        .arg(arg!(-u --unfold "Unfold results").requires("input"))
         .get_matches();
 
     let path = matches
