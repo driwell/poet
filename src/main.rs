@@ -2,7 +2,7 @@ use anyhow::{Context, Result};
 use std::path::PathBuf;
 
 use clap::{arg, command, value_parser};
-use poet::{all, find, print, replace};
+use poet::{all, find, print, replace, unfold};
 
 fn main() -> Result<()> {
     let matches = command!()
@@ -35,7 +35,14 @@ fn main() -> Result<()> {
         lines = find(pattern, path)?;
     } else if let Some(pattern) = matches.get_many::<String>("replace") {
         let pattern: Vec<_> = pattern.collect();
-        lines = replace(pattern[0], pattern[1], path)?;
+
+        if matches.get_flag("unfold") {
+            // TODO: remove this after proof-of-concept
+            let values = vec!["Freya", "Bella"];
+            lines = unfold(replace(pattern[0], pattern[1], path)?, pattern[0], values)?;
+        } else {
+            lines = replace(pattern[0], pattern[1], path)?;
+        }
     } else if matches.get_one::<bool>("all").is_some() {
         lines = all(path)?;
     } else {
