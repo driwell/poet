@@ -34,25 +34,17 @@ fn main() -> Result<()> {
     let lines: Vec<String>;
 
     if let Some(pattern) = matches.get_one::<String>("find") {
-        lines = find(pattern, read(path)?)?;
-    } else if let Some(pattern) = matches.get_many::<String>("replace") {
-        let pattern: Vec<_> = pattern.collect();
-
         if matches.get_flag("unfold") {
             let input = matches
                 .get_one::<PathBuf>("input")
                 .with_context(|| "no input provided")?;
-            let values = read(input)?;
-            // TODO:: pattern[0]x2 is not good. The command should be done with just the old
-            // parameter in this case.
-            lines = unfold(
-                replace(pattern[0], pattern[0], read(path)?)?,
-                pattern[0],
-                values,
-            )?;
+            lines = unfold(find(pattern, read(path)?)?, pattern, read(input)?)?;
         } else {
-            lines = replace(pattern[0], pattern[1], read(path)?)?;
+            lines = find(pattern, read(path)?)?;
         }
+    } else if let Some(pattern) = matches.get_many::<String>("replace") {
+        let pattern: Vec<_> = pattern.collect();
+        lines = replace(pattern[0], pattern[1], read(path)?)?;
     } else if matches.get_one::<bool>("all").is_some() {
         lines = read(path)?;
     } else {
