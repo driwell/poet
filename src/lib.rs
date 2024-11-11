@@ -53,7 +53,7 @@ pub fn replace(old: &str, new: &str, lines: Vec<String>) -> Result<Vec<String>> 
     Ok(replaced)
 }
 
-pub fn unfold(lines: Vec<String>, pattern: &str, values: Vec<&str>) -> Result<Vec<String>> {
+pub fn unfold(lines: Vec<String>, pattern: &str, values: Vec<String>) -> Result<Vec<String>> {
     let mut unfolded = Vec::new();
 
     for line in lines {

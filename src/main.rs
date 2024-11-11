@@ -21,7 +21,9 @@ fn main() -> Result<()> {
                 .num_args(2)
                 .value_names(["OLD", "NEW"]),
         )
-        .arg(arg!(-i --input <FILE> "Take optional input file"))
+        .arg(
+            arg!(-i --input <FILE> "Take optional input file").value_parser(value_parser!(PathBuf)),
+        )
         .arg(arg!(-u --unfold "Unfold results").requires("input"))
         .get_matches();
 
@@ -37,10 +39,14 @@ fn main() -> Result<()> {
         let pattern: Vec<_> = pattern.collect();
 
         if matches.get_flag("unfold") {
-            // TODO: remove this after proof-of-concept
-            let values = vec!["Freya", "Bella"];
+            let input = matches
+                .get_one::<PathBuf>("input")
+                .with_context(|| "no input provided")?;
+            let values = read(input)?;
+            // TODO:: pattern[0]x2 is not good. The command should be done with just the old
+            // parameter in this case.
             lines = unfold(
-                replace(pattern[0], pattern[1], read(path)?)?,
+                replace(pattern[0], pattern[0], read(path)?)?,
                 pattern[0],
                 values,
             )?;
