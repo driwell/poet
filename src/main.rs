@@ -21,6 +21,8 @@ fn main() -> Result<()> {
                 .num_args(2)
                 .value_names(["OLD", "NEW"]),
         )
+        .arg(arg!(-i --input <FILE> "Take optional input file"))
+        .arg(arg!(-u --unfold "Unfold reults"))
         .get_matches();
 
     let path = matches
