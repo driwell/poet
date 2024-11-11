@@ -27,7 +27,9 @@ Arguments:
   <path>  File path
 
 Options:
-  -f, --find <PATTERN>  Prints out lines with occurrences of a pattern
-  -h, --help            Print help
-  -V, --version         Print version
+  -a, --all                  Print all lines
+  -f, --find <PATTERN>       Print lines with a PATTERN
+  -r, --replace <OLD> <NEW>  Print lines with OLD replaced by NEW
+  -h, --help                 Print help
+  -V, --version              Print version
 ```
