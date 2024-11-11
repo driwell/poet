@@ -13,6 +13,12 @@ fn main() -> Result<()> {
                 .value_parser(value_parser!(PathBuf))
                 .required(true),
         )
+        .arg(
+            arg!(-r --replace <PATTERN> "Print lines with OLD replaced by NEW")
+                .value_delimiter(' ')
+                .num_args(2)
+                .value_names(["OLD", "NEW"]),
+        )
         .get_matches();
 
     let path = matches
