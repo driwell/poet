@@ -29,18 +29,16 @@ pub fn read(path: &Path) -> Result<Vec<String>> {
     Ok(lines)
 }
 
-pub fn find(pattern: &str, path: &Path) -> Result<Vec<String>> {
-    let content = read_lines(path)?;
-    let mut lines = Vec::new();
+pub fn find(pattern: &str, lines: Vec<String>) -> Result<Vec<String>> {
+    let mut found = Vec::new();
 
-    for line in content
-        .map_while(Result::ok)
-        .filter(|line| line.contains(pattern))
-    {
-        lines.push(line)
+    for line in lines {
+        if line.contains(pattern) {
+            found.push(line)
+        }
     }
 
-    Ok(lines)
+    Ok(found)
 }
 
 pub fn replace(old: &str, new: &str, path: &Path) -> Result<Vec<String>> {

@@ -32,7 +32,8 @@ fn main() -> Result<()> {
     let lines: Vec<String>;
 
     if let Some(pattern) = matches.get_one::<String>("find") {
-        lines = find(pattern, path)?;
+        let read = read(path)?;
+        lines = find(pattern, read)?;
     } else if let Some(pattern) = matches.get_many::<String>("replace") {
         let pattern: Vec<_> = pattern.collect();
 
