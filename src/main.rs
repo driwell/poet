@@ -7,6 +7,7 @@ use poet::{all, find, print, replace};
 fn main() -> Result<()> {
     let matches = command!()
         .about("Parses exported topics")
+        .arg(arg!(-a --all "Print all lines"))
         .arg(arg!(-f --find <PATTERN> "Print lines with a PATTERN"))
         .arg(
             arg!([path] "File path")
@@ -32,8 +33,11 @@ fn main() -> Result<()> {
     } else if let Some(pattern) = matches.get_many::<String>("replace") {
         let pattern: Vec<_> = pattern.collect();
         lines = replace(pattern[0], pattern[1], path)?;
-    } else {
+    } else if matches.get_one::<String>("all").is_some() {
         lines = all(path)?;
+    } else {
+        // TODO: handle these cases, probably use subcommands and make option required
+        panic!("shouln't be able to pass no options")
     }
 
     print(lines)
