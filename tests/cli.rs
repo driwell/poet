@@ -69,3 +69,17 @@ fn unexpected_argument() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+#[test]
+fn print_all_content_when_no_option() -> Result<(), Box<dyn std::error::Error>> {
+    let file = assert_fs::NamedTempFile::new("sample.txt")?;
+    file.write_str("A foo\njumped over a bar\nthen a foobar")?;
+
+    let mut cmd = Command::cargo_bin("poet")?;
+    cmd.arg(file.path());
+    cmd.assert()
+        .success()
+        .stdout(predicate::eq("A foo\njumped over a bar\nthen a foobar\n"));
+
+    Ok(())
+}
