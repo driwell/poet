@@ -18,7 +18,7 @@ pub fn print(lines: Vec<String>) -> Result<()> {
     Ok(())
 }
 
-pub fn all(path: &Path) -> Result<Vec<String>> {
+pub fn read(path: &Path) -> Result<Vec<String>> {
     let content = read_lines(path)?;
     let mut lines = Vec::new();
 
@@ -29,32 +29,28 @@ pub fn all(path: &Path) -> Result<Vec<String>> {
     Ok(lines)
 }
 
-pub fn find(pattern: &str, path: &Path) -> Result<Vec<String>> {
-    let content = read_lines(path)?;
-    let mut lines = Vec::new();
+pub fn find(pattern: &str, lines: Vec<String>) -> Result<Vec<String>> {
+    let mut found = Vec::new();
 
-    for line in content
-        .map_while(Result::ok)
-        .filter(|line| line.contains(pattern))
-    {
-        lines.push(line)
+    for line in lines {
+        if line.contains(pattern) {
+            found.push(line)
+        }
     }
 
-    Ok(lines)
+    Ok(found)
 }
 
-pub fn replace(old: &str, new: &str, path: &Path) -> Result<Vec<String>> {
-    let content = read_lines(path)?;
-    let mut lines = Vec::new();
+pub fn replace(old: &str, new: &str, lines: Vec<String>) -> Result<Vec<String>> {
+    let mut replaced = Vec::new();
 
-    for line in content
-        .map_while(Result::ok)
-        .filter(|line| line.contains(old))
-    {
-        lines.push(line.replace(old, new));
+    for line in lines {
+        if line.contains(old) {
+            replaced.push(line.replace(old, new));
+        }
     }
 
-    Ok(lines)
+    Ok(replaced)
 }
 
 pub fn unfold(lines: Vec<String>, pattern: &str, values: Vec<&str>) -> Result<Vec<String>> {
